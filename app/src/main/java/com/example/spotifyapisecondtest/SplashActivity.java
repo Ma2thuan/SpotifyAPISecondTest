@@ -2,6 +2,7 @@ package com.example.spotifyapisecondtest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -56,8 +57,8 @@ public class SplashActivity extends AppCompatActivity {
                         Log.d("SongPlay", "Connected! Yay!");
 
                         connected();
+                        //spotifyAppRemote.getPlayerApi().play("spotify:playlist:" + songService.getSongs().toString() );
 
-                        spotifyAppRemote.getPlayerApi().play("spotify:track:" + songService.getSongs().toString() );
                     }
 
                     @Override
@@ -151,12 +152,18 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void connected() {
-        // Then we will write some more code here.
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+        String message = sharedPreferences.getString("TRACK_ID_KEY", "");
+
+        mSpotifyAppRemote.getPlayerApi().play("spotify:track:"+message);
+
+        Log.d("SongPlay","spotify:track:"+message);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        // Aaand we will finish off here.
+        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
     }
 }
