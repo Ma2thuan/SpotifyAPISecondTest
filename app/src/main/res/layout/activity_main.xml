@@ -9,6 +9,25 @@
     android:gravity="center"
     >
 
+    <EditText
+        android:id="@+id/nameFindSong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Find your song"
+        android:textSize="30sp"
+        />
+
+    <Button
+        android:id="@+id/btnFind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find da Song!"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/txtUser"
         android:layout_width="match_parent"
@@ -28,6 +47,18 @@
         android:text="Song Name"
         android:gravity="center"
         />
+
+    <TextView
+        android:id="@+id/songID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        android:text="Song ID"
+        android:gravity="center"
+        />
+
+
 
 
     <Button

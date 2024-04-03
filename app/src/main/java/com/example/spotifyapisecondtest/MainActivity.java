@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,10 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView userView;
     private TextView songView;
+    private TextView songID;
     private Button addBtn;
+    private Button findBtn;
     private Song song;
     private SongService songService;
     private ArrayList<Song> recentlyPlayedTracks;
+    private ArrayList<Song> recentlyFoundTracks;
     private SpotifyAppRemote spotifyAppRemote;
 
     @Override
@@ -34,7 +38,15 @@ public class MainActivity extends AppCompatActivity {
         songService = new SongService(getApplicationContext());
         userView = findViewById(R.id.txtUser);
         songView = findViewById(R.id.txtSong);
+        songID = findViewById(R.id.songID);
+
+
         addBtn = findViewById(R.id.btnAdd);
+        addBtn.setOnClickListener(addListener);
+
+        findBtn = findViewById(R.id.btnFind);
+        findBtn.setOnClickListener(addFinder);
+
 
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("SPOTIFY", 0);
@@ -43,6 +55,24 @@ public class MainActivity extends AppCompatActivity {
         getTracks();
     }
 
+
+
+    private View.OnClickListener addListener = v -> {
+        songService.addSongToLibrary(this.song);
+        if (recentlyPlayedTracks.size() > 0) {
+            recentlyPlayedTracks.remove(0);
+        }
+        updateSong();
+    };
+
+    private View.OnClickListener addFinder = v -> {
+        songService.findSong(binding.nameFindSong.toString());
+        if (recentlyFoundTracks.size() > 0) {
+            recentlyFoundTracks.remove(0);
+        }
+        updateSong();
+
+    };
 
 
     private void getTracks() {
@@ -56,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateSong() {
         if (recentlyPlayedTracks.size() > 0) {
             songView.setText(recentlyPlayedTracks.get(0).getName());
+            songID.setText(recentlyPlayedTracks.get(0).getId());
             song = recentlyPlayedTracks.get(0);
         }
     }

@@ -33,6 +33,7 @@ public class SongService {
         return songs;
     }
 
+
     public ArrayList<Song> getRecentlyPlayedTracks(final VolleyCallBack callBack) {
         String endpoint = "https://api.spotify.com/v1/me/player/recently-played";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -66,5 +67,45 @@ public class SongService {
         queue.add(jsonObjectRequest);
         return songs;
     }
+
+
+    public void addSongToLibrary(Song song) {
+        JSONObject payload = preparePutPayload(song);
+        JsonObjectRequest jsonObjectRequest = prepareSongLibraryRequest(payload);
+        queue.add(jsonObjectRequest);
+    }
+
+    private JsonObjectRequest prepareSongLibraryRequest(JSONObject payload) {
+        return new JsonObjectRequest(Request.Method.PUT, "https://api.spotify.com/v1/me/tracks", payload, response -> {
+        }, error -> {
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String token = sharedPreferences.getString("token", "");
+                String auth = "Bearer " + token;
+                headers.put("Authorization", auth);
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+    }
+
+    private JSONObject preparePutPayload(Song song) {
+        JSONArray idarray = new JSONArray();
+        idarray.put(song.getId());
+        JSONObject ids = new JSONObject();
+        try {
+            ids.put("ids", idarray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return ids;
+    }
+
+    public void findSong (String a) {
+
+    }
+
 
 }

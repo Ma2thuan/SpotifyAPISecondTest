@@ -10,6 +10,7 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.spotifyapisecondtest.Class.User;
+import com.example.spotifyapisecondtest.Connectors.SongService;
 import com.example.spotifyapisecondtest.Connectors.UserService;
 import com.example.spotifyapisecondtest.databinding.ActivitySplashBinding;
 import com.spotify.android.appremote.api.ConnectionParams;
@@ -34,6 +35,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private SpotifyAppRemote mSpotifyAppRemote;
 
+    private SongService songService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +57,7 @@ public class SplashActivity extends AppCompatActivity {
 
                         connected();
 
-                        spotifyAppRemote.getPlayerApi().play("spotify:track:5ruzrDWcT0vuJIOMW7gMnW");
-
+                        spotifyAppRemote.getPlayerApi().play("spotify:track:" + songService.getSongs().toString() );
                     }
 
                     @Override
@@ -123,6 +125,10 @@ public class SplashActivity extends AppCompatActivity {
             startMainActivity();
         });
     }
+
+
+
+
     private void startMainActivity() {
         Intent intent = new Intent(SplashActivity.this , MainActivity.class);
         startActivity(intent);
