@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     private View.OnClickListener addListener = v -> {
         songService.addSongToLibrary(this.song);
         if (recentlyPlayedTracks.size() > 0) {

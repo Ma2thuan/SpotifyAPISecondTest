@@ -59,6 +59,8 @@ public class SplashActivity extends AppCompatActivity {
                         connected();
                         //spotifyAppRemote.getPlayerApi().play("spotify:playlist:" + songService.getSongs().toString() );
 
+
+
                     }
 
                     @Override
@@ -166,4 +168,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onStop();
         SpotifyAppRemote.disconnect(mSpotifyAppRemote);
     }
+
+    @Override
+    public void onDestroy() {
+        onStop();
+        super.onDestroy();
+    }
+
 }
